@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.desafiotecnicosicredi.dto.pauta.PautaRequestDTO;
-import com.example.desafiotecnicosicredi.dto.pauta.PautaResponseDTO;
-import com.example.desafiotecnicosicredi.service.PautaService;
+import com.example.desafiotecnicosicredi.dto.voto.VotoRequestDTO;
+import com.example.desafiotecnicosicredi.dto.voto.VotoResponseDTO;
+import com.example.desafiotecnicosicredi.service.VotoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/pauta")
-public class PautaResource {
+@RequestMapping("/v1/voto")
+public class VotoResource {
 
     @Autowired
-    PautaService pautaService;
+    VotoService votoService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Criar pauta")
-    public ResponseEntity<PautaResponseDTO> criarPauta(@Valid @RequestBody PautaRequestDTO pauta) {
-        return ResponseEntity.ok(pautaService.criarPauta(pauta));
+    @Operation(summary = "Registrar voto")
+    public ResponseEntity<VotoResponseDTO> registrarVoto(@Valid @RequestBody VotoRequestDTO voto) {
+        return ResponseEntity.ok(votoService.registrarVoto(voto));
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar pauta pelo id")
-    public ResponseEntity<PautaResponseDTO> buscarPauta(@PathVariable Long id) {
-        return ResponseEntity.ok(pautaService.consultarPauta(id));
+    @Operation(summary = "Buscar voto pelo id")
+    public ResponseEntity<VotoResponseDTO> buscarVoto(@PathVariable Long id) {
+        return ResponseEntity.ok(votoService.consultarVoto(id));
     }
 }

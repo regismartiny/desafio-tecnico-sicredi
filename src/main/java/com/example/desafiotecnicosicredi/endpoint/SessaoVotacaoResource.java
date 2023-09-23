@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/sessaovotacao")
+@RequestMapping("/v1/sessao-votacao")
 public class SessaoVotacaoResource {
 
     @Autowired
@@ -29,12 +29,12 @@ public class SessaoVotacaoResource {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar sessão de votação")
     public ResponseEntity<SessaoVotacaoResponseDTO> criarSessaoVotacao(@Valid @RequestBody SessaoVotacaoRequestDTO pauta) {
-        return ResponseEntity.ofNullable(sessaoVotacaoService.criarSessaoVotacao(pauta));
+        return ResponseEntity.ok(sessaoVotacaoService.criarSessaoVotacao(pauta));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar sessão de votação pelo id")
     public ResponseEntity<SessaoVotacaoResponseDTO> buscarSessaoVotacao(@PathVariable Long id) {
-        return ResponseEntity.ofNullable(sessaoVotacaoService.consultarSessaoVotacao(id));
+        return ResponseEntity.ok(sessaoVotacaoService.consultarSessaoVotacao(id));
     }
 }

@@ -4,8 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum I18Constants {
-    NO_ITEM_FOUND("item.absent"),
-    INVALID_FIELDS("invalid.fields");
+    REGISTRO_NAO_ENCONTRADO("registro.nao.encontrado"),
+    CAMPOS_INVALIDOS("campos.invalidos"),
+    SESSAO_NAO_INICIOU("sessao.nao.iniciou"),
+    SESSAO_EXPIRADA("sessao.expirada");
 
     final String key;
     I18Constants(String key) {

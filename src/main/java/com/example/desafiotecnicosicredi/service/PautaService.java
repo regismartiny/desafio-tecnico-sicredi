@@ -42,12 +42,12 @@ public class PautaService extends ServiceBase {
      * Procurar pauta no repository.
      * Caso não encontre, lança NoSuchElementException.
      *
-     * @param id
+     * @param id identificador da pauta
      * @return Pauta
      */
     public Pauta findByIdOrThrow(Long id) {
         return pautaRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), id.toString())));
+                        new NoSuchElementException(getLocalMessage(I18Constants.REGISTRO_NAO_ENCONTRADO.getKey(), id.toString())));
     }
 }

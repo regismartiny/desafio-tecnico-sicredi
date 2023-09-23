@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.desafiotecnicosicredi.constants.I18Constants;
+import com.example.desafiotecnicosicredi.exception.ApplicationException;
 import com.example.desafiotecnicosicredi.exception.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        var response = new ErrorResponse(BAD_REQUEST.value(), getLocalMessage(I18Constants.INVALID_FIELDS.getKey()));
+        var response = new ErrorResponse(BAD_REQUEST.value(), getLocalMessage(I18Constants.CAMPOS_INVALIDOS.getKey()));
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
@@ -49,5 +50,12 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorResponse> handleApplicationException(Exception e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(BAD_REQUEST.value(), e.getLocalizedMessage()), NOT_FOUND);
+    }
+
 
 }

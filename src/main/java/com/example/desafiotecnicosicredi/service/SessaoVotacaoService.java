@@ -46,12 +46,12 @@ public class SessaoVotacaoService extends ServiceBase {
      * Procurar sessão de votação no repository.
      * Caso não encontre, lança NoSuchElementException.
      *
-     * @param id
+     * @param id identificador da sessão de votação
      * @return SessaoVotacao
      */
-    private SessaoVotacao findByIdOrThrow(Long id) {
+    public SessaoVotacao findByIdOrThrow(Long id) {
         return sessaoVotacaoRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(getLocalMessage(I18Constants.NO_ITEM_FOUND.getKey(), id.toString())));
+                        new NoSuchElementException(getLocalMessage(I18Constants.REGISTRO_NAO_ENCONTRADO.getKey(), id.toString())));
     }
 }
