@@ -11,29 +11,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.desafiotecnicosicredi.dto.pauta.consultar.PautaConsultarDTO;
-import com.example.desafiotecnicosicredi.dto.pauta.criar.PautaCriarDTO;
+import com.example.desafiotecnicosicredi.dto.pauta.PautaRequestDTO;
+import com.example.desafiotecnicosicredi.dto.pauta.PautaResponseDTO;
 import com.example.desafiotecnicosicredi.service.PautaService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/pautas")
+@RequestMapping("/v1/pautas")
 public class PautaResource {
 
     @Autowired
     PautaService pautaService;
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Buscar pauta pelo id")
-    public ResponseEntity<PautaConsultarDTO> buscarPauta(@PathVariable Long id) {
-        return ResponseEntity.ofNullable(pautaService.consultarPauta(id));
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criarPauta(@Valid @RequestBody PautaCriarDTO pauta) {
-        pautaService.criarPauta(pauta);
+    @Operation(summary = "Criar pauta")
+    public ResponseEntity<PautaResponseDTO> criarPauta(@Valid @RequestBody PautaRequestDTO pauta) {
+        return ResponseEntity.ofNullable(pautaService.criarPauta(pauta));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar pauta pelo id")
+    public ResponseEntity<PautaResponseDTO> buscarPauta(@PathVariable Long id) {
+        return ResponseEntity.ofNullable(pautaService.consultarPauta(id));
     }
 }
