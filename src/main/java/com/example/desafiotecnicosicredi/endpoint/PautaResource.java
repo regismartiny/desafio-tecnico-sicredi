@@ -2,7 +2,6 @@ package com.example.desafiotecnicosicredi.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,13 +27,13 @@ public class PautaResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar pauta")
-    public ResponseEntity<PautaResponseDTO> criarPauta(@Valid @RequestBody PautaRequestDTO pauta) {
-        return ResponseEntity.ok(pautaService.criarPauta(pauta));
+    public PautaResponseDTO criarPauta(@Valid @RequestBody PautaRequestDTO pauta) {
+        return pautaService.criarPauta(pauta);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar pauta pelo id")
-    public ResponseEntity<PautaResponseDTO> buscarPauta(@PathVariable Long id) {
-        return ResponseEntity.ok(pautaService.consultarPauta(id));
+    public PautaResponseDTO buscarPauta(@PathVariable Long id) {
+        return pautaService.consultarPauta(id);
     }
 }

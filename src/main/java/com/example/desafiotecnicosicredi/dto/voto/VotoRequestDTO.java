@@ -6,9 +6,11 @@ import com.example.desafiotecnicosicredi.validation.CPFValid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class VotoRequestDTO {
     @NotNull
     private OpcaoVoto opcao;

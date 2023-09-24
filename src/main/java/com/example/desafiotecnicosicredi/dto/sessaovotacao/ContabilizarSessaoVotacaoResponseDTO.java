@@ -10,9 +10,11 @@ import com.example.desafiotecnicosicredi.enums.OpcaoVoto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class ContabilizarSessaoVotacaoResponseDTO {
     private String nomePauta;
     private String situacaoSessao;

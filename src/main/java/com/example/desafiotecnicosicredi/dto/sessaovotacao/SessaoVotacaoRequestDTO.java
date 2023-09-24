@@ -6,9 +6,11 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString
 public class SessaoVotacaoRequestDTO {
     @FutureOrPresent
     private LocalDateTime dataInicio;
