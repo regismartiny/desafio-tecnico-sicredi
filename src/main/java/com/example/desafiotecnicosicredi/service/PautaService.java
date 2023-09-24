@@ -26,6 +26,12 @@ public class PautaService extends ServiceBase {
     @Autowired
     PautaRepository pautaRepository;
 
+    /**
+     * Criar uma pauta de votação.
+     *
+     * @param dto corpo da requisicao
+     * @return PautaResponseDTO
+     */
     public PautaResponseDTO criarPauta(PautaRequestDTO dto) {
         log.info("Cadastrando pauta: {}", dto);
         var pauta = pautaMapper.toEntity(dto, USUARIO);
@@ -33,6 +39,12 @@ public class PautaService extends ServiceBase {
         return pautaMapper.fromEntity(pauta);
     }
 
+    /**
+     * Consultar pauta de votação pelo id.
+     *
+     * @param id identificador da pauta
+     * @return PautaResponseDTO
+     */
     public PautaResponseDTO consultarPauta(Long id) {
         var pauta = findByIdOrThrow(id);
         return pautaMapper.fromEntity(pauta);

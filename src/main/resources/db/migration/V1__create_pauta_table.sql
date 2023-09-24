@@ -1,5 +1,3 @@
-SET client_encoding TO utf8;
-
 CREATE TABLE pauta (
 	id serial NOT NULL,
 	nome VARCHAR(20) NOT NULL,

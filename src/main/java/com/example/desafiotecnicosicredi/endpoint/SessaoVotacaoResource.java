@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.desafiotecnicosicredi.dto.sessaovotacao.ContabilizarSessaoVotacaoResponseDTO;
 import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoRequestDTO;
 import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoResponseDTO;
 import com.example.desafiotecnicosicredi.service.SessaoVotacaoService;
@@ -37,4 +38,10 @@ public class SessaoVotacaoResource {
     public ResponseEntity<SessaoVotacaoResponseDTO> buscarSessaoVotacao(@PathVariable Long id) {
         return ResponseEntity.ok(sessaoVotacaoService.consultarSessaoVotacao(id));
     }
+    @GetMapping("/{id}/contabilizar")
+    @Operation(summary = "Contabilizar votos da sessão")
+    public ResponseEntity<ContabilizarSessaoVotacaoResponseDTO> contabilizarSessaoVotacao(@PathVariable Long id) {
+        return ResponseEntity.ok(sessaoVotacaoService.contabilizarSessaoVotacao(id));
+    }
+
 }

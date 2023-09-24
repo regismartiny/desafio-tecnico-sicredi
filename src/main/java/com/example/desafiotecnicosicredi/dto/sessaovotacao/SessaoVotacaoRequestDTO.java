@@ -12,7 +12,9 @@ import lombok.Data;
 public class SessaoVotacaoRequestDTO {
     @FutureOrPresent
     private LocalDateTime dataInicio;
+
     private Long validadeEmMinutos;
+
     @NotNull
     private Long idPauta;
 }

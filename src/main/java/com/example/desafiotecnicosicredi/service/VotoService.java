@@ -32,13 +32,27 @@ public class VotoService extends ServiceBase {
     @Autowired
     SessaoVotacaoService sessaoVotacaoService;
 
+    /**
+     * Registrar um voto.
+     * Sessão de votação informada deve existir e estar aberta.
+     *
+     * @param dto corpo da requisicao
+     * @return VotoResponseDTO
+     */
     public VotoResponseDTO registrarVoto(VotoRequestDTO dto) {
         log.info("Registrando voto: {}", dto);
         var sessaoVotacao = sessaoVotacaoService.findByIdOrThrow(dto.getIdSessao());
         validarSessaoVotacaoAberta(sessaoVotacao);
+        validarAssociadoAindaNaoVotou(dto, sessaoVotacao);
         var voto = votoMapper.toEntity(dto, sessaoVotacao, USUARIO);
         voto = votoRepository.save(voto);
         return votoMapper.fromEntity(voto);
+    }
+
+    private void validarAssociadoAindaNaoVotou(VotoRequestDTO dto, SessaoVotacao sessaoVotacao) {
+        if (votoRepository.verificarSeUsuarioJaVotou(dto.getCpfAssociado(), sessaoVotacao.getPauta().getId() )) {
+            throw new ApplicationException(getLocalMessage(I18Constants.ASSOCIADO_JA_VOTOU.getKey()));
+        }
     }
 
     private void validarSessaoVotacaoAberta(SessaoVotacao sessaoVotacao) {
@@ -47,10 +61,16 @@ public class VotoService extends ServiceBase {
             throw new ApplicationException(getLocalMessage(I18Constants.SESSAO_NAO_INICIOU.getKey()));
         }
         if (dataAtual.isAfter(sessaoVotacao.getDataFimValidade())) {
-            throw new ApplicationException(getLocalMessage(I18Constants.SESSAO_EXPIRADA.getKey()));
+            throw new ApplicationException(getLocalMessage(I18Constants.SESSAO_ENCERRADA.getKey()));
         }
     }
 
+    /**
+     * Consultar voto pelo id.
+     *
+     * @param id identificador do voto
+     * @return VotoResponseDTO
+     */
     public VotoResponseDTO consultarVoto(Long id) {
         var voto = findByIdOrThrow(id);
         return votoMapper.fromEntity(voto);

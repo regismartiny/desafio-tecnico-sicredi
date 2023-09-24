@@ -1,9 +1,7 @@
-SET client_encoding TO utf8;
-
 CREATE TABLE voto (
 	id serial NOT NULL,
 	cpf_associado VARCHAR(11) NOT NULL,
-	opcao_voto INTGER NOT NULL,
+	opcao_voto INTEGER NOT NULL,
 	id_sessao_votacao INTEGER NOT NULL,
 	usuario VARCHAR(20) NOT NULL,
 	versao TIMESTAMP without TIME ZONE NOT NULL,

@@ -1,5 +1,3 @@
-SET client_encoding TO utf8;
-
 CREATE TABLE sessao_votacao (
 	id serial NOT NULL,
 	data_inicio TIMESTAMP without TIME ZONE NOT NULL,

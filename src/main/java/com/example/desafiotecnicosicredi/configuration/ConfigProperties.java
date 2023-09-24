@@ -17,4 +17,6 @@ public class ConfigProperties {
 
     @NotNull
     private Duration validadePadraoSessao;
+
+    private String timeZone;
 }

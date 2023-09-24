@@ -2,8 +2,12 @@ package com.example.desafiotecnicosicredi.entity;
 
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 
+import com.example.desafiotecnicosicredi.enums.SituacaoSessao;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -43,10 +48,24 @@ public class SessaoVotacao {
     @JoinColumn(name = "id_pauta", nullable = false)
     private Pauta pauta;
 
+    @OneToMany(mappedBy = "sessaoVotacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<Voto> votos;
+
     @Column(nullable = false)
     private String usuario;
 
     @Version
     private Date versao;
+
+    public SituacaoSessao getSituacaoSessao() {
+        var dataAtual = LocalDateTime.now();
+        if (dataInicio.isAfter(dataAtual)) {
+            return SituacaoSessao.CRIADA;
+        }
+        if (!dataInicio.isAfter(dataAtual) && dataAtual.isBefore(dataFimValidade)) {
+            return SituacaoSessao.EM_ANDAMENTO;
+        }
+        return SituacaoSessao.FINALIZADA;
+    }
 
 }

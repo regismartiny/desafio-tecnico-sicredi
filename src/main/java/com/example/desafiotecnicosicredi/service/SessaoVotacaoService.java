@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.desafiotecnicosicredi.constants.I18Constants;
-import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoResponseDTO;
+import com.example.desafiotecnicosicredi.dto.sessaovotacao.ContabilizarSessaoVotacaoResponseDTO;
 import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoRequestDTO;
+import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoResponseDTO;
 import com.example.desafiotecnicosicredi.entity.SessaoVotacao;
 import com.example.desafiotecnicosicredi.mapper.SessaoVotacaoMapper;
 import com.example.desafiotecnicosicredi.repository.SessaoVotacaoRepository;
@@ -29,6 +30,12 @@ public class SessaoVotacaoService extends ServiceBase {
     @Autowired
     PautaService pautaService;
 
+    /**
+     * Criar uma sessão de votação.
+     *
+     * @param dto corpo da requisicao
+     * @return SessaoVotacaoResponseDTO
+     */
     public SessaoVotacaoResponseDTO criarSessaoVotacao(SessaoVotacaoRequestDTO dto) {
         log.info("Cadastrando sessão de votação: {}", dto);
         var pauta = pautaService.findByIdOrThrow(dto.getIdPauta());
@@ -37,6 +44,12 @@ public class SessaoVotacaoService extends ServiceBase {
         return sessaoVotacaoMapper.fromEntity(sessaoVotacao);
     }
 
+    /**
+     * Consultar sessão de votação pelo id.
+     *
+     * @param id identificador da sessao
+     * @return SessaoVotacaoResponseDTO
+     */
     public SessaoVotacaoResponseDTO consultarSessaoVotacao(Long id) {
         var sessaoVotacao = findByIdOrThrow(id);
         return sessaoVotacaoMapper.fromEntity(sessaoVotacao);
@@ -52,6 +65,11 @@ public class SessaoVotacaoService extends ServiceBase {
     public SessaoVotacao findByIdOrThrow(Long id) {
         return sessaoVotacaoRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(getLocalMessage(I18Constants.REGISTRO_NAO_ENCONTRADO.getKey(), id.toString())));
+                        new NoSuchElementException(getLocalMessage(I18Constants.SESSAO_VOTACAO_NAO_ENCONTRADA.getKey(), id.toString())));
+    }
+
+    public ContabilizarSessaoVotacaoResponseDTO contabilizarSessaoVotacao(Long id) {
+        var sessaoVotacao = findByIdOrThrow(id);
+        return ContabilizarSessaoVotacaoResponseDTO.of(sessaoVotacao);
     }
 }
