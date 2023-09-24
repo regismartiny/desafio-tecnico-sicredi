@@ -5,6 +5,7 @@ import static com.example.desafiotecnicosicredi.constants.Constantes.USUARIO;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.desafiotecnicosicredi.constants.I18Constants;
@@ -45,6 +46,7 @@ public class PautaService extends ServiceBase {
      * @param id identificador da pauta
      * @return PautaResponseDTO
      */
+    @Cacheable(value = "pauta")
     public PautaResponseDTO consultarPauta(Long id) {
         var pauta = findByIdOrThrow(id);
         return pautaMapper.fromEntity(pauta);

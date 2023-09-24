@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.desafiotecnicosicredi.constants.I18Constants;
@@ -71,6 +72,7 @@ public class VotoService extends ServiceBase {
      * @param id identificador do voto
      * @return VotoResponseDTO
      */
+    @Cacheable(value = "voto")
     public VotoResponseDTO consultarVoto(Long id) {
         var voto = findByIdOrThrow(id);
         return votoMapper.fromEntity(voto);
