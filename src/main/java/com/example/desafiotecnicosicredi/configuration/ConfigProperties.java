@@ -19,4 +19,6 @@ public class ConfigProperties {
     private Duration validadePadraoSessao;
 
     private String timeZone;
+    private String localeLanguage;
+    private String localeCountry;
 }
