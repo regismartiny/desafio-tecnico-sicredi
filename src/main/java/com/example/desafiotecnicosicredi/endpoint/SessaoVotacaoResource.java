@@ -37,6 +37,7 @@ public class SessaoVotacaoResource {
     public SessaoVotacaoResponseDTO buscarSessaoVotacao(@PathVariable Long id) {
         return sessaoVotacaoService.consultarSessaoVotacao(id);
     }
+
     @GetMapping("/{id}/contabilizar")
     @Operation(summary = "Contabilizar votos da sessão")
     public ContabilizarSessaoVotacaoResponseDTO contabilizarSessaoVotacao(@PathVariable Long id) {

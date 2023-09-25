@@ -21,10 +21,15 @@ class SessaoVotacaoResourceTest extends ResourceTest {
 
     private static final Long ID_PAUTA_EXISTENTE = 100L;
     private static final Long ID_PAUTA_INEXISTENTE = 500L;
+    private static final Long ID_SESSAO_VOTACAO_EXISTENTE = 100L;
+    private static final Long ID_SESSAO_VOTACAO_INEXISTENTE = 500L;
     public static final String PATH_ID_PAUTA = "idPauta";
     public static final String PATH_DATA_INICIO = "dataInicio";
     public static final String PATH_DATA_FIM_VALIDADE = "dataFimValidade";
     public static final String ENDPOINT = "/sessao-votacao";
+    private static final String PATH_NOME_PAUTA = "nomePauta";
+    private static final String PATH_SITUACAO_SESSAO = "situacaoSessao";
+    private static final String PATH_VOTOS_CONTABILIZADOS = "votosContabilizados";
 
     @Test
     @Order(1)
@@ -72,6 +77,23 @@ class SessaoVotacaoResourceTest extends ResourceTest {
         Response response = getRequest(ENDPOINT + "/" + ID_PAUTA_INEXISTENTE);
 
         assertErrorStatusAndMessage(response, NOT_FOUND, getLocalMessage(SESSAO_VOTACAO_NAO_ENCONTRADA));
+    }
+
+    @Test
+    void contabilizarSessaoVotacao_quandoIdSessaoVotacaoInexistenteInformado_deveRetornarErro() {
+        Response response = getRequest(ENDPOINT + "/" + ID_SESSAO_VOTACAO_INEXISTENTE + "/contabilizar");
+
+        assertErrorStatusAndMessage(response, NOT_FOUND, getLocalMessage(SESSAO_VOTACAO_NAO_ENCONTRADA));
+    }
+
+    @Test
+    void contabilizarSessaoVotacao_quandoIdSessaoValidoInformado_deveRetornarContabilizacao() {
+        Response response = getRequest(ENDPOINT + "/" + ID_SESSAO_VOTACAO_EXISTENTE + "/contabilizar");
+
+        assertEquals(OK.value(), response.statusCode());
+        assertNotNull(response.jsonPath().getString(PATH_NOME_PAUTA));
+        assertNotNull(response.jsonPath().getString(PATH_SITUACAO_SESSAO));
+        assertNotNull(response.jsonPath().getString(PATH_VOTOS_CONTABILIZADOS));
     }
 
     private SessaoVotacaoRequestDTO criarSessaoVotacaoValida() {

@@ -38,10 +38,10 @@ public class SessaoVotacao {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sessao_votacao_id_sessao_votacao_seq_generator")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "data_inicio", nullable = false)
     private LocalDateTime dataInicio;
 
-    @Column(nullable = false)
+    @Column(name = "data_fim_validade", nullable = false)
     private LocalDateTime dataFimValidade;
 
     @ManyToOne(fetch = FetchType.LAZY)
