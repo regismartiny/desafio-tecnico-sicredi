@@ -9,7 +9,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class PautaRequestDTO {
-    @NotBlank(message = "Nome é obrigatório")
+    @NotBlank
     private String nome;
 
     @NotBlank

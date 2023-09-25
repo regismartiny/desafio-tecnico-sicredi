@@ -2,7 +2,6 @@ package com.example.desafiotecnicosicredi.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,13 +27,13 @@ public class VotoResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Registrar voto")
-    public ResponseEntity<VotoResponseDTO> registrarVoto(@Valid @RequestBody VotoRequestDTO voto) {
-        return ResponseEntity.ok(votoService.registrarVoto(voto));
+    public VotoResponseDTO registrarVoto(@Valid @RequestBody VotoRequestDTO voto) {
+        return votoService.registrarVoto(voto);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar voto pelo id")
-    public ResponseEntity<VotoResponseDTO> buscarVoto(@PathVariable Long id) {
-        return ResponseEntity.ok(votoService.consultarVoto(id));
+    public VotoResponseDTO buscarVoto(@PathVariable Long id) {
+        return votoService.consultarVoto(id);
     }
 }

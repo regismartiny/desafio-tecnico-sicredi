@@ -1,18 +1,25 @@
 package com.example.desafiotecnicosicredi.endpoint;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Locale;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.desafiotecnicosicredi.DesafioTecnicoSicrediApplication;
+import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.RestAssured;
@@ -21,19 +28,36 @@ import io.restassured.response.Response;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = DesafioTecnicoSicrediApplication.class)
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
+@TestPropertySource(locations = "classpath:application-integrationtest.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ResourceTest {
-
+    private final static String BASE_URI = "http://localhost/v1";
     public static final String HEADER_CONTENT_TYPE = "Content-type";
     public static final String CONTENT_TYPE_JSON = "application/json";
+    public static final String PATH_STATUS = "status";
+    public static final String PATH_MESSAGE = "message";
+    public static final String PATH_ID = "id";
 
-    @BeforeAll
-    public static void setup() {
-        RestAssured.baseURI = "http://localhost:8080/v1";
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    protected String getLocalMessage(String key, String... params) {
+        return messageSource.getMessage(key, params, Locale.getDefault());
+    }
+
+    protected String getLocalMessage(I18Constants msg) {
+        return messageSource.getMessage(msg.getKey(), null, Locale.getDefault());
+    }
+
+    @BeforeEach
+    public void setup() {
+        RestAssured.baseURI = BASE_URI;
+        RestAssured.port = port;
     }
 
     public Response postRequest(String url, Object body) {
@@ -67,10 +91,16 @@ public class ResourceTest {
                 .extract().response();
     }
 
+    public void assertErrorStatusAndMessage(Response response, HttpStatus status, String message) {
+        assertEquals(status.value(), response.statusCode());
+        assertEquals(status.value(), response.jsonPath().getInt(PATH_STATUS));
+        assertEquals(message, response.jsonPath().getString(PATH_MESSAGE));
+    }
+
     private static String objectToJson(Object body) {
         try {
             return new ObjectMapper().writeValueAsString(body);
         } catch (Exception ignored) {}
-        return "";
+        return "{}";
     }
 }

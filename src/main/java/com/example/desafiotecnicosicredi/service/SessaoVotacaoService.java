@@ -70,6 +70,12 @@ public class SessaoVotacaoService extends ServiceBase {
                         new NoSuchElementException(getLocalMessage(I18Constants.SESSAO_VOTACAO_NAO_ENCONTRADA.getKey(), id.toString())));
     }
 
+    /**
+     * Obter contabilização de votos da sessão.
+     *
+     * @param id identificador da sessão de votação
+     * @return ContabilizarSessaoVotacaoResponseDTO
+     */
     public ContabilizarSessaoVotacaoResponseDTO contabilizarSessaoVotacao(Long id) {
         var sessaoVotacao = findByIdOrThrow(id);
         return ContabilizarSessaoVotacaoResponseDTO.of(sessaoVotacao);

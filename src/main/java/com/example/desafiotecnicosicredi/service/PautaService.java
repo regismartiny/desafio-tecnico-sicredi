@@ -42,6 +42,7 @@ public class PautaService extends ServiceBase {
 
     /**
      * Consultar pauta de votação pelo id.
+     * Caso não existir, será lançada exceção.
      *
      * @param id identificador da pauta
      * @return PautaResponseDTO
@@ -62,6 +63,6 @@ public class PautaService extends ServiceBase {
     public Pauta findByIdOrThrow(Long id) {
         return pautaRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(getLocalMessage(I18Constants.REGISTRO_NAO_ENCONTRADO.getKey(), id.toString())));
+                        new NoSuchElementException(getLocalMessage(I18Constants.PAUTA_NAO_ENCONTRADA.getKey(), id.toString())));
     }
 }

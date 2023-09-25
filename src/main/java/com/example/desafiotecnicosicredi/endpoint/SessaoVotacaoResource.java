@@ -2,7 +2,6 @@ package com.example.desafiotecnicosicredi.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,19 +28,19 @@ public class SessaoVotacaoResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar sessão de votação")
-    public ResponseEntity<SessaoVotacaoResponseDTO> criarSessaoVotacao(@Valid @RequestBody SessaoVotacaoRequestDTO pauta) {
-        return ResponseEntity.ok(sessaoVotacaoService.criarSessaoVotacao(pauta));
+    public SessaoVotacaoResponseDTO criarSessaoVotacao(@Valid @RequestBody SessaoVotacaoRequestDTO pauta) {
+        return sessaoVotacaoService.criarSessaoVotacao(pauta);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar sessão de votação pelo id")
-    public ResponseEntity<SessaoVotacaoResponseDTO> buscarSessaoVotacao(@PathVariable Long id) {
-        return ResponseEntity.ok(sessaoVotacaoService.consultarSessaoVotacao(id));
+    public SessaoVotacaoResponseDTO buscarSessaoVotacao(@PathVariable Long id) {
+        return sessaoVotacaoService.consultarSessaoVotacao(id);
     }
     @GetMapping("/{id}/contabilizar")
     @Operation(summary = "Contabilizar votos da sessão")
-    public ResponseEntity<ContabilizarSessaoVotacaoResponseDTO> contabilizarSessaoVotacao(@PathVariable Long id) {
-        return ResponseEntity.ok(sessaoVotacaoService.contabilizarSessaoVotacao(id));
+    public ContabilizarSessaoVotacaoResponseDTO contabilizarSessaoVotacao(@PathVariable Long id) {
+        return sessaoVotacaoService.contabilizarSessaoVotacao(id);
     }
 
 }

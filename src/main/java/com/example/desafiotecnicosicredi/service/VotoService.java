@@ -88,6 +88,6 @@ public class VotoService extends ServiceBase {
     public Voto findByIdOrThrow(Long id) {
         return votoRepository.findById(id)
                 .orElseThrow(() ->
-                        new NoSuchElementException(getLocalMessage(I18Constants.REGISTRO_NAO_ENCONTRADO.getKey(), id.toString())));
+                        new NoSuchElementException(getLocalMessage(I18Constants.VOTO_NAO_ENCONTRADO.getKey(), id.toString())));
     }
 }

@@ -4,8 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum I18Constants {
-    REGISTRO_NAO_ENCONTRADO("registro.nao.encontrado"),
+    VOTO_NAO_ENCONTRADO("voto.nao.encontrado"),
     SESSAO_VOTACAO_NAO_ENCONTRADA("sessao.votacao.nao.encontrada"),
+    PAUTA_NAO_ENCONTRADA("pauta.nao.encontrada"),
     CAMPOS_INVALIDOS("campos.invalidos"),
     SESSAO_NAO_INICIOU("sessao.nao.iniciou"),
     SESSAO_ENCERRADA("sessao.ja.encerrada"),
