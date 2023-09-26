@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> handleApplicationException(Exception e) {
         log.error(e.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(BAD_REQUEST.value(), e.getLocalizedMessage()), NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponse(BAD_REQUEST.value(), e.getLocalizedMessage()), BAD_REQUEST);
     }
 
 
