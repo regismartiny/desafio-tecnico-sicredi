@@ -1,13 +1,17 @@
 package com.example.desafiotecnicosicredi.entity;
 
 
+import java.util.Collection;
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -34,6 +38,9 @@ public class Pauta {
 
     @Column(nullable = false)
     private String descricao;
+
+    @OneToMany(mappedBy = "pauta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<SessaoVotacao> sessoesVotacao;
 
     @Column(nullable = false)
     private String usuario;

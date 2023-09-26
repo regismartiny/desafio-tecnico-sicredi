@@ -5,7 +5,8 @@ import static com.example.desafiotecnicosicredi.constants.I18Constants.CAMPOS_IN
 import static com.example.desafiotecnicosicredi.constants.I18Constants.SESSAO_ENCERRADA;
 import static com.example.desafiotecnicosicredi.constants.I18Constants.SESSAO_NAO_INICIOU;
 import static com.example.desafiotecnicosicredi.constants.I18Constants.VOTO_NAO_ENCONTRADO;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -14,7 +15,6 @@ import static org.springframework.http.HttpStatus.OK;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import com.example.desafiotecnicosicredi.dto.sessaovotacao.SessaoVotacaoRequestDTO;
 import com.example.desafiotecnicosicredi.dto.voto.VotoRequestDTO;
 import com.example.desafiotecnicosicredi.enums.OpcaoVoto;
 import com.example.desafiotecnicosicredi.utils.CPFUtil;

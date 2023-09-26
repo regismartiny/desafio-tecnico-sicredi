@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.example.desafiotecnicosicredi.dto.pauta.PautaRequestDTO;
 import com.example.desafiotecnicosicredi.dto.pauta.PautaResponseDTO;
+import com.example.desafiotecnicosicredi.dto.sessaovotacao.ContabilizarPautaResponseDTO;
 import com.example.desafiotecnicosicredi.entity.Pauta;
 import com.example.desafiotecnicosicredi.mapper.PautaMapper;
 import com.example.desafiotecnicosicredi.repository.PautaRepository;
@@ -64,5 +65,17 @@ public class PautaService extends ServiceBase {
         return pautaRepository.findById(id)
                 .orElseThrow(() ->
                         new NoSuchElementException(getLocalMessage(I18Constants.PAUTA_NAO_ENCONTRADA.getKey(), id.toString())));
+    }
+
+    /**
+     * Obter contabilização de votos das sessões da Pauta.
+     *
+     * @param id identificador da pauta
+     * @param exibirDetalhamentoSessoes flag que indica se deve ser exibido o detalhamento dos votos das sessões
+     * @return ContabilizarPautaResponseDTO
+     */
+    public ContabilizarPautaResponseDTO contabilizarVotacao(Long id, boolean exibirDetalhamentoSessoes) {
+        var pauta = findByIdOrThrow(id);
+        return ContabilizarPautaResponseDTO.of(pauta, exibirDetalhamentoSessoes);
     }
 }

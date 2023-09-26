@@ -28,8 +28,8 @@ class SessaoVotacaoResourceTest extends ResourceTest {
     public static final String PATH_DATA_FIM_VALIDADE = "dataFimValidade";
     public static final String ENDPOINT = "/sessao-votacao";
     private static final String PATH_NOME_PAUTA = "nomePauta";
-    private static final String PATH_SITUACAO_SESSAO = "situacaoSessao";
-    private static final String PATH_VOTOS_CONTABILIZADOS = "votosContabilizados";
+    private static final String PATH_SITUACAO_SESSAO = "contabilizacaoSessao.situacaoSessao";
+    private static final String PATH_VOTOS_CONTABILIZADOS = "contabilizacaoSessao.votosContabilizados";
 
     @Test
     @Order(1)
