@@ -5,21 +5,26 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-public class LocaleConfig {
+public class LocaleConfig implements WebMvcConfigurer {
 
     @Autowired
     ConfigProperties configProperties;
 
     @PostConstruct
     public void init() {
-        setDefaultLocale();
         setDefaultTimeZone();
     }
 
@@ -31,18 +36,22 @@ public class LocaleConfig {
         }
     }
 
-    private void setDefaultLocale() {
-        String language = configProperties.getLocaleLanguage();
-        String country = configProperties.getLocaleCountry();
-        Locale locale;
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.US);
+        return slr;
+    }
 
-        if (StringUtils.isNotBlank(language) && StringUtils.isNotBlank(country)) {
-            locale = Locale.of(language, country);
-        } else {
-            locale = Locale.ENGLISH;
-        }
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
 
-        Locale.setDefault(locale);
-        log.info("Locale configured to {}", locale);
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
 }

@@ -16,9 +16,10 @@ import lombok.Setter;
 public class ConfigProperties {
 
     @NotNull
-    private Duration validadePadraoSessao;
+    private Duration validadePadraoSessaoVotacao;
 
     private String timeZone;
-    private String localeLanguage;
-    private String localeCountry;
+    private String cpfValidacaoUrl;
+    private String cpfValidacaoToken;
+    private Boolean cpfValidacaoExterna;
 }

@@ -10,7 +10,8 @@ public enum I18Constants {
     CAMPOS_INVALIDOS("campos.invalidos"),
     SESSAO_NAO_INICIOU("sessao.nao.iniciou"),
     SESSAO_ENCERRADA("sessao.ja.encerrada"),
-    ASSOCIADO_JA_VOTOU("associado.ja.votou");
+    ASSOCIADO_JA_VOTOU("associado.ja.votou"),
+    ERRO_AO_VALIDAR_CPF("erro.ao.validar.cpf");
 
     final String key;
     I18Constants(String key) {

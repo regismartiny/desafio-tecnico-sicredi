@@ -36,7 +36,7 @@ public class SessaoVotacaoMapper {
     private LocalDateTime calcularDataFimValidade(SessaoVotacaoRequestDTO dto) {
         var dataInicio = obterDataInicio(dto);
         var validadeEmSegundos = dto.getValidadeEmMinutos() != null ? dto.getValidadeEmMinutos() * 60
-                : configProperties.getValidadePadraoSessao().toSeconds();
+                : configProperties.getValidadePadraoSessaoVotacao().toSeconds();
         return dataInicio.plusSeconds(validadeEmSegundos);
     }
 

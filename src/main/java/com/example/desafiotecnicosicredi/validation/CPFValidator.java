@@ -1,6 +1,8 @@
 package com.example.desafiotecnicosicredi.validation;
 
-import com.example.desafiotecnicosicredi.utils.CPFUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.desafiotecnicosicredi.client.CPFValidatorService;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -8,6 +10,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class CPFValidator implements ConstraintValidator<CPFValid, String> {
 
     private boolean enabled = true;
+
+    @Autowired
+    CPFValidatorService cpfValidatorService;
 
     @Override
     public void initialize(CPFValid constraintAnnotation) {
@@ -25,7 +30,7 @@ public class CPFValidator implements ConstraintValidator<CPFValid, String> {
             return true;
         }
 
-        return CPFUtil.isCPF(value);
+        return cpfValidatorService.validarDocumento(value);
     }
 
     public void enable() {

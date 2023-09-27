@@ -23,7 +23,7 @@ import jakarta.validation.Payload;
 @Documented
 public @interface CPFValid {
 
-    String message() default "{validation.annotation.CPFValid.message}";
+    String message() default "{cpf.invalid}";
 
     Class<?>[] groups() default {};
 

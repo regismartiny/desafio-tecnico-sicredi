@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.example.desafiotecnicosicredi.exception.ApplicationException;
+import com.example.desafiotecnicosicredi.exception.CPFValidationException;
 import com.example.desafiotecnicosicredi.exception.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,7 @@ public class GlobalExceptionHandler {
     MessageSource messageSource;
 
     String getLocalMessage(String key, String... params) {
-        return messageSource.getMessage(key, params, Locale.getDefault());
+        return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
     }
 
     @ResponseStatus(NOT_FOUND)
@@ -50,12 +52,21 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
+
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> handleApplicationException(Exception e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(BAD_REQUEST.value(), e.getLocalizedMessage()), BAD_REQUEST);
     }
+
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(CPFValidationException.class)
+    public ResponseEntity<ErrorResponse> handleCPFValidationException(Exception e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(BAD_REQUEST.value(), e.getLocalizedMessage()), BAD_REQUEST);
+    }
+
 
 
 }
