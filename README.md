@@ -1,4 +1,4 @@
-R# Desafio Técnico Sicredi
+# Desafio Técnico Sicredi
 
 Microsserviço responsável por criar e gerenciar Pautas de Votação dos Associados da Cooperativa.
 
