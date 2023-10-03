@@ -3,7 +3,6 @@ package com.example.desafiotecnicosicredi.endpoint;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +12,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.example.desafiotecnicosicredi.DesafioTecnicoSicrediApplication;
+import com.example.desafiotecnicosicredi.configuration.CustomMessageSource;
 import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,14 +43,10 @@ public class ResourceTest {
     private int port;
 
     @Autowired
-    private MessageSource messageSource;
-
-    protected String getLocalMessage(String key, String... params) {
-        return messageSource.getMessage(key, params, Locale.getDefault());
-    }
+    private CustomMessageSource messageSource;
 
     protected String getLocalMessage(I18Constants msg) {
-        return messageSource.getMessage(msg.getKey(), null, Locale.getDefault());
+        return messageSource.getMessage(msg.getKey());
     }
 
     @BeforeEach

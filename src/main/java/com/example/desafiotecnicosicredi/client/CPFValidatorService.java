@@ -1,16 +1,14 @@
 package com.example.desafiotecnicosicredi.client;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.example.desafiotecnicosicredi.configuration.ConfigProperties;
+import com.example.desafiotecnicosicredi.configuration.CustomMessageSource;
 import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.example.desafiotecnicosicredi.dto.cpf.ValidatorResponse;
 import com.example.desafiotecnicosicredi.exception.CPFValidationException;
@@ -27,7 +25,7 @@ public class CPFValidatorService {
     ConfigProperties configProperties;
 
     @Autowired
-    MessageSource messageSource;
+    CustomMessageSource messageSource;
 
     @Autowired
     WebClient webClient;
@@ -55,11 +53,8 @@ public class CPFValidatorService {
     }
 
     private Mono<? extends Throwable> tratarRespostaErro(HttpStatusCode statusCode) {
-        String mensagem = getLocalMessage(I18Constants.ERRO_AO_VALIDAR_CPF.getKey(), statusCode.toString());
+        String mensagem = messageSource.getMessage(I18Constants.ERRO_AO_VALIDAR_CPF.getKey(), statusCode.toString());
         return Mono.error(new CPFValidationException(mensagem));
     }
 
-    private String getLocalMessage(String key, String... params) {
-        return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
-    }
 }

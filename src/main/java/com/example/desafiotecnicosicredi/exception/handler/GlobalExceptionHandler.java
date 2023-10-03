@@ -3,12 +3,9 @@ package com.example.desafiotecnicosicredi.exception.handler;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.example.desafiotecnicosicredi.configuration.CustomMessageSource;
 import com.example.desafiotecnicosicredi.constants.I18Constants;
 import com.example.desafiotecnicosicredi.exception.ApplicationException;
 import com.example.desafiotecnicosicredi.exception.CPFValidationException;
@@ -28,11 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
     @Autowired
-    MessageSource messageSource;
-
-    String getLocalMessage(String key, String... params) {
-        return messageSource.getMessage(key, params, LocaleContextHolder.getLocale());
-    }
+    CustomMessageSource messageSource;
 
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
@@ -44,7 +38,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        var response = new ErrorResponse(BAD_REQUEST.value(), getLocalMessage(I18Constants.CAMPOS_INVALIDOS.getKey()));
+        var response = new ErrorResponse(BAD_REQUEST.value(), messageSource.getMessage(I18Constants.CAMPOS_INVALIDOS.getKey()));
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
