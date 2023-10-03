@@ -1,6 +1,6 @@
 # Desafio Técnico Sicredi
 
-Microsserviço responsável por criar e gerenciar Pautas de Votação dos Associados da Cooperativa.
+Microsserviço responsável por gerenciar Pautas de Votação dos Associados da Cooperativa.
 
 ## Descrição
 
