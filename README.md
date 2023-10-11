@@ -18,23 +18,24 @@ A contabilização de Votos da Sessão de Votação pode ser acessada a partir d
 de Votação.
 
 ### Persistência de dados
-Para fins de simplificação e facilidade de avaliação da solução está habilitado por padrão o banco H2, 
-com persistência de dados em arquivo. Porém, é possível alterar facilmente o banco de dados para PostgreSQL, 
-alterando as propriedades spring.datasource do arquivo application.properties:
+Por padrão está habilitado o banco Postgres, porém é possível alterar
+facilmente para o banco H2 (com persistência de dados em arquivo),
+editando as propriedades spring.datasource do arquivo application.properties:
 ```
 ##H2
-#spring.h2.console.enabled=true
-#spring.datasource.driverClassName=org.h2.Driver
-#spring.datasource.url=jdbc:h2:file:./data/test
-#spring.datasource.username=sa
-#spring.datasource.password=
-#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.url=jdbc:h2:file:./data/test
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 
 ##Postgres
-spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
-spring.datasource.username=postgres
-spring.datasource.password=password
+#spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+#spring.datasource.username=postgres
+#spring.datasource.password=password
 ```
+Para execução dos testes de integração, é utilizado o banco H2 em memória.
 
 ### Validade padrão da Sessão de Votação
 Para alterar a validade padrão da sessão da votação (quando o usuário não informa a validade na criação da sessão),
@@ -55,11 +56,15 @@ config.cpf-validacao-externa=true
 
 ## Pré-requisitos
 
-- Java 20+ (Java 21 recomendado)
-- Spring Boot 3.1.4
+- Desenvolvimento
+  - JDK 20+ (JDK 21 recomendado) 
+- Execução 
+  - A) Java 20+ 
+  - B) Docker + docker-compose
 
-
-### **Compilação e Runtime**
+### **Dependências de Compilação e Runtime**
+- SpringBoot [[Doc](https://spring.io/projects/spring-boot)]
+  - Framework JAVA.
 - SpringDoc OpenAPI / Swagger [[Doc](https://springdoc.org/)]
   - Interface do usuário para renderizar visualmente a documentação de uma API definida com a especificação OpenAPI.
 - Spring Boot Actuator / Health [[Doc](https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/actuator.html)]
@@ -75,11 +80,11 @@ config.cpf-validacao-externa=true
 - Flyway [[Doc](https://documentation.red-gate.com/fd#)]
   - Gerenciador de migrations do banco de dados.
 - JDBC Driver - Postgres
-  - Conexão ao banco de dados PostgresSQL via JDBC
+  - Conexão ao banco de dados PostgresSQL via JDBC.
 - Lombok [[Doc](https://projectlombok.org/features/all)]
   - Utilização de Annotations pra geração de código verboso/repetitivo (getter, setter, construtores, etc).
 
-### **Teste**
+### **Dependências de Testes**
 
 - Spring Boot Starter Test
   - Ferramentas para criação de testes de integração e de unidade.
@@ -88,7 +93,7 @@ config.cpf-validacao-externa=true
 - JaCoCo [[Doc](https://www.eclemma.org/index.html)]
   - Geração de relatório de cobertura de testes.
 - JDBC Driver - H2 
-  - Conexão ao banco de dados em memória H2 via JDBC
+  - Conexão ao banco de dados em memória H2 via JDBC.
 
 ## Estrutura do projeto
 
@@ -112,6 +117,8 @@ config.cpf-validacao-externa=true
 
 ## Execução do projeto
 
+### A) Execução local, via maven (necessário JAVA instalado)
+
 Navegue até o diretório raiz do projeto e siga as instruções abaixo.
 
 Caso seu sistema não esteja com JDK 21 instalado como variável de ambiente, serão necessários alguns comandos para garantir que seu terminal
@@ -125,12 +132,12 @@ export PATH=$JAVA_HOME/bin:$PATH
 ```
 <br>
 
-### Execução em desenvolvimento
+#### Execução da aplicação
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Após a satisfação de dependências e subida da interface, nosso sistema está no ar!
+Após a satisfação de dependências e subida da interface, a aplicação estará no ar!
 
 Para verificar, acesse:
 
@@ -138,17 +145,17 @@ http://localhost:8090/swagger-ui/index.html
 
 <br>
 
-## Execução de testes
+#### Execução de testes
 Para executar testes, usar o comando:
 ```bash
 ./mvnw test
 ```
 
-### Cobertura de testes
+#### Cobertura de testes
 
-Para gerar o Relatório de cobertura de código rodar o comando `verify`
+Para gerar o Relatório de cobertura de código, rodar o comando `verify`
 
-Para executar os testes usar o comando:
+Para executar os testes, usar o comando:
 
 ```bash
 ./mvnw clean verify
@@ -158,6 +165,18 @@ Após conclusão, abrir no navegador o arquivo
 
 ```
 <diretorio_raiz_projeto>/target/site/jacoco/index.html
+```
+
+### B) Execução via Docker Compose (necessário Docker e docker-compose instalados)
+
+Para compilar o projeto, gerar o pacote executável (jar)
+e executar a aplicação:
+```bash
+docker-compose up --build
+```
+Para somente executar a aplicação
+```bash
+docker-compose up
 ```
 
 <br>
@@ -178,13 +197,14 @@ http://localhost:8090/v3/api-docs
 
 Este projeto utiliza o `Hibernate Validator` para realizar as validações dos campos dos objetos.
 
-Para mais detalhes de como realizar as validações, [consultar este tutotial](https://docs.jboss.org/hibernate/validator/8.0/reference/en-US/html_single/#validator-gettingstarted-createmodel).
+Para mais detalhes de como realizar as validações, [consultar este tutorial](https://docs.jboss.org/hibernate/validator/8.
+0/reference/en-US/html_single/#validator-gettingstarted-createmodel).
 
 #### **_Exemplo_**
 
 Exemplo de classe com validações:
 
-- Primeiro adicione annotations nos campos que deseja validação
+- Primeiro adicione annotations nos campos que desejas validar
 
   ```java
   public class VotoRequestDTO {

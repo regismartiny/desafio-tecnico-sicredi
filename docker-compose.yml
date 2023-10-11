@@ -1,0 +1,25 @@
+version: '2'
+services:
+  database:
+    image: 'postgres:15.2'
+    ports:
+      - '5432'
+    environment:
+      - 'POSTGRES_DB=postgres'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=password'
+    networks:
+      - spring-cloud-network
+
+  app:
+    container_name: desafio-tecnico-sicredi
+    build:
+      dockerfile: Dockerfile
+    image: desafio-tecnico-sicredi:latest
+    ports:
+      - 8090:8090
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge
