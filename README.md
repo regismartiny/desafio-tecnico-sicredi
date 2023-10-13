@@ -166,6 +166,7 @@ Após conclusão, abrir no navegador o arquivo
 ```
 <diretorio_raiz_projeto>/target/site/jacoco/index.html
 ```
+<br>
 
 ### B) Execução via Docker Compose (necessário Docker e docker-compose instalados)
 
@@ -193,12 +194,12 @@ http://localhost:8090/v3/api-docs
 
 <br>
 
-### **Validações**
+## **Validações**
 
 Este projeto utiliza o `Hibernate Validator` para realizar as validações dos campos dos objetos.
 
-Para mais detalhes de como realizar as validações, [consultar este tutorial](https://docs.jboss.org/hibernate/validator/8.
-0/reference/en-US/html_single/#validator-gettingstarted-createmodel).
+Para mais detalhes de como realizar as validações,
+[consultar este tutorial](https://docs.jboss.org/hibernate/validator/80/reference/en-US/html_single/#validator-gettingstarted-createmodel).
 
 #### **_Exemplo_**
 
